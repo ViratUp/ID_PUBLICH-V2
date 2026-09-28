@@ -1,0 +1,3492 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>WEYA.exe — Independent Artist</title>
+
+<meta name="description" content="WEYA.exe — Independent Artist from Thailand. Illustration, tattoo art, pattern design, visual art and commissions.">
+<meta name="keywords" content="WEYA.exe, artist, Thailand artist, illustration, tattoo artist, pattern design, commission, visual art">
+<meta name="author" content="WEYA.exe">
+
+<!-- Google Fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@300;400;500&family=DM+Sans:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400;1,500&display=swap" rel="stylesheet">
+
+<style>
+
+/* =========================================================
+   ROOT
+========================================================= */
+
+:root {
+    --bg: #09090b;
+    --bg-soft: #101013;
+    --bg-card: #141417;
+
+    --text: #eeeae1;
+    --text-soft: #aaa59d;
+    --text-muted: #706d68;
+
+    --line: rgba(238,234,225,0.14);
+    --line-soft: rgba(238,234,225,0.07);
+
+    --red: #b82e32;
+    --red-light: #d34a4f;
+
+    --white: #ffffff;
+
+    --sidebar-width: 270px;
+
+    --serif: "Playfair Display", serif;
+    --sans: "DM Sans", sans-serif;
+    --mono: "DM Mono", monospace;
+
+    --ease: cubic-bezier(.22,.61,.36,1);
+}
+
+
+/* =========================================================
+   RESET
+========================================================= */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--sans);
+    overflow-x: hidden;
+    cursor: none;
+}
+
+a {
+    color: inherit;
+    text-decoration: none;
+}
+
+button {
+    font-family: inherit;
+}
+
+
+/* =========================================================
+   CUSTOM CURSOR
+========================================================= */
+
+.cursor {
+    position: fixed;
+    width: 10px;
+    height: 10px;
+    background: var(--text);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 9999;
+    transform: translate(-50%, -50%);
+    transition:
+        width .25s ease,
+        height .25s ease,
+        background .25s ease;
+    mix-blend-mode: difference;
+}
+
+.cursor-ring {
+    position: fixed;
+    width: 38px;
+    height: 38px;
+    border: 1px solid rgba(255,255,255,.6);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 9998;
+    transform: translate(-50%, -50%);
+    transition:
+        width .35s ease,
+        height .35s ease;
+    mix-blend-mode: difference;
+}
+
+.cursor.active {
+    width: 20px;
+    height: 20px;
+}
+
+.cursor-ring.active {
+    width: 65px;
+    height: 65px;
+}
+
+
+/* =========================================================
+   LOADER
+========================================================= */
+
+.loader {
+    position: fixed;
+    inset: 0;
+    background: #050506;
+    z-index: 10000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition:
+        opacity 1s ease,
+        visibility 1s ease;
+}
+
+.loader.hide {
+    opacity: 0;
+    visibility: hidden;
+}
+
+.loader-inner {
+    width: min(500px, 80%);
+}
+
+.loader-top {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 15px;
+
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: .15em;
+}
+
+.loader-bar {
+    width: 100%;
+    height: 1px;
+    background: rgba(255,255,255,.15);
+    overflow: hidden;
+}
+
+.loader-progress {
+    width: 0%;
+    height: 100%;
+    background: var(--text);
+    transition: width .1s linear;
+}
+
+
+/* =========================================================
+   NOISE
+========================================================= */
+
+.noise {
+    position: fixed;
+    inset: -50%;
+    width: 200%;
+    height: 200%;
+    pointer-events: none;
+    z-index: 9997;
+    opacity: .045;
+
+    background-image:
+        url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.8'/%3E%3C/svg%3E");
+
+    animation: noiseMove .18s steps(2) infinite;
+}
+
+@keyframes noiseMove {
+    0% { transform: translate(0,0); }
+    25% { transform: translate(2%, -2%); }
+    50% { transform: translate(-2%, 2%); }
+    75% { transform: translate(1%, 2%); }
+    100% { transform: translate(-1%, -1%); }
+}
+
+
+/* =========================================================
+   SIDEBAR
+========================================================= */
+
+.sidebar {
+    position: fixed;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: var(--sidebar-width);
+
+    padding: 42px 34px;
+
+    border-right: 1px solid var(--line-soft);
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
+    z-index: 100;
+}
+
+.logo {
+    font-family: var(--mono);
+    font-size: 17px;
+    font-weight: 500;
+    letter-spacing: .05em;
+}
+
+.logo span {
+    color: var(--red);
+}
+
+.logo-sub {
+    margin-top: 8px;
+
+    font-family: var(--mono);
+    font-size: 9px;
+    letter-spacing: .18em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+}
+
+.side-nav {
+    margin-top: 80px;
+}
+
+.side-nav a {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+
+    padding: 8px 0;
+
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+
+    color: var(--text-muted);
+
+    transition: color .3s ease;
+}
+
+.side-nav a::before {
+    content: "";
+    width: 0;
+    height: 1px;
+    background: var(--red);
+    transition: width .3s ease;
+}
+
+.side-nav a:hover,
+.side-nav a.active {
+    color: var(--text);
+}
+
+.side-nav a:hover::before,
+.side-nav a.active::before {
+    width: 18px;
+}
+
+.sidebar-bottom {
+    font-family: var(--mono);
+    font-size: 9px;
+    line-height: 1.8;
+    color: var(--text-muted);
+}
+
+.status {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    margin-bottom: 15px;
+}
+
+.status-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: #6e9b68;
+    box-shadow: 0 0 10px rgba(110,155,104,.7);
+}
+
+
+/* =========================================================
+   MOBILE NAV
+========================================================= */
+
+.mobile-nav {
+    display: none;
+
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+
+    height: 72px;
+
+    padding: 0 22px;
+
+    align-items: center;
+    justify-content: space-between;
+
+    background: rgba(9,9,11,.88);
+    backdrop-filter: blur(20px);
+
+    border-bottom: 1px solid var(--line-soft);
+
+    z-index: 500;
+}
+
+.mobile-menu {
+    display: flex;
+    gap: 7px;
+}
+
+.mobile-menu span {
+    display: block;
+    width: 23px;
+    height: 1px;
+    background: var(--text);
+}
+
+
+/* =========================================================
+   MAIN
+========================================================= */
+
+main {
+    margin-left: var(--sidebar-width);
+}
+
+
+/* =========================================================
+   HERO
+========================================================= */
+
+.hero {
+    min-height: 100vh;
+    position: relative;
+
+    display: flex;
+    align-items: flex-end;
+
+    padding: 70px 7vw 80px;
+
+    overflow: hidden;
+}
+
+.hero-background {
+    position: absolute;
+    inset: 0;
+
+    background-image:
+        linear-gradient(
+            90deg,
+            rgba(9,9,11,.97) 0%,
+            rgba(9,9,11,.73) 45%,
+            rgba(9,9,11,.45) 100%
+        ),
+        url("https://images.unsplash.com/photo-1513364776144-60967b0f800f?auto=format&fit=crop&w=2200&q=90");
+
+    background-size: cover;
+    background-position: center;
+
+    filter: saturate(.55) contrast(1.05);
+    transform: scale(1.04);
+
+    animation: heroZoom 12s ease forwards;
+}
+
+@keyframes heroZoom {
+    from {
+        transform: scale(1.08);
+    }
+    to {
+        transform: scale(1);
+    }
+}
+
+.hero-content {
+    position: relative;
+    z-index: 2;
+    max-width: 1000px;
+}
+
+.eyebrow {
+    display: flex;
+    align-items: center;
+    gap: 13px;
+
+    margin-bottom: 30px;
+
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: .2em;
+    text-transform: uppercase;
+
+    color: var(--text-muted);
+}
+
+.eyebrow::before {
+    content: "";
+    width: 32px;
+    height: 1px;
+    background: var(--red);
+}
+
+.hero h1 {
+    font-family: var(--serif);
+    font-weight: 400;
+
+    font-size: clamp(72px, 12vw, 180px);
+
+    line-height: .79;
+    letter-spacing: -.065em;
+
+    max-width: 1000px;
+}
+
+.hero h1 em {
+    font-weight: 400;
+    color: #bcb6ac;
+}
+
+.hero-description {
+    max-width: 520px;
+
+    margin-top: 48px;
+
+    font-size: 15px;
+    line-height: 1.8;
+    color: var(--text-soft);
+}
+
+.hero-meta {
+    margin-top: 50px;
+
+    display: flex;
+    gap: 50px;
+
+    font-family: var(--mono);
+    font-size: 9px;
+
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: .12em;
+}
+
+.hero-meta strong {
+    display: block;
+    margin-top: 7px;
+
+    color: var(--text);
+    font-weight: 400;
+}
+
+
+/* =========================================================
+   SCROLL INDICATOR
+========================================================= */
+
+.scroll-indicator {
+    position: absolute;
+    right: 6vw;
+    bottom: 70px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 13px;
+
+    font-family: var(--mono);
+    font-size: 8px;
+    color: var(--text-muted);
+    letter-spacing: .2em;
+    text-transform: uppercase;
+}
+
+.scroll-line {
+    width: 1px;
+    height: 65px;
+    background: linear-gradient(
+        to bottom,
+        transparent,
+        var(--text-muted)
+    );
+}
+
+
+/* =========================================================
+   MARQUEE
+========================================================= */
+
+.marquee {
+    overflow: hidden;
+    border-top: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+
+    padding: 20px 0;
+
+    white-space: nowrap;
+}
+
+.marquee-track {
+    display: inline-flex;
+    animation: marquee 30s linear infinite;
+}
+
+.marquee-item {
+    font-family: var(--serif);
+    font-size: 22px;
+    font-style: italic;
+
+    color: var(--text-muted);
+
+    margin-right: 45px;
+}
+
+.marquee-item span {
+    color: var(--red);
+    margin-left: 45px;
+}
+
+@keyframes marquee {
+    from {
+        transform: translateX(0);
+    }
+
+    to {
+        transform: translateX(-50%);
+    }
+}
+
+
+/* =========================================================
+   GLOBAL SECTION
+========================================================= */
+
+.section {
+    padding: 150px 7vw;
+    border-bottom: 1px solid var(--line-soft);
+}
+
+.section-header {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+
+    margin-bottom: 85px;
+}
+
+.section-number {
+    font-family: var(--mono);
+    font-size: 10px;
+    color: var(--red);
+    letter-spacing: .15em;
+}
+
+.section-title {
+    font-family: var(--serif);
+    font-weight: 400;
+
+    font-size: clamp(50px, 7vw, 100px);
+
+    line-height: .9;
+    letter-spacing: -.04em;
+}
+
+.section-title em {
+    color: var(--text-muted);
+}
+
+
+/* =========================================================
+   ABOUT
+========================================================= */
+
+.about-grid {
+    display: grid;
+    grid-template-columns: 1.05fr 1fr;
+    gap: 8vw;
+    align-items: center;
+}
+
+.about-image {
+    position: relative;
+    aspect-ratio: 4 / 5;
+    overflow: hidden;
+}
+
+.about-image img {
+    width: 100%;
+    height: 100%;
+
+    object-fit: cover;
+
+    filter: grayscale(.65) contrast(1.08);
+
+    transition: transform 1s var(--ease);
+}
+
+.about-image:hover img {
+    transform: scale(1.06);
+}
+
+.image-label {
+    position: absolute;
+    left: 18px;
+    bottom: 18px;
+
+    font-family: var(--mono);
+    font-size: 8px;
+    color: #fff;
+
+    letter-spacing: .15em;
+    text-transform: uppercase;
+
+    background: rgba(0,0,0,.6);
+    padding: 8px 11px;
+}
+
+.about-text {
+    max-width: 600px;
+}
+
+.about-lead {
+    font-family: var(--serif);
+    font-size: clamp(30px, 4vw, 52px);
+    line-height: 1.12;
+
+    margin-bottom: 38px;
+}
+
+.about-lead em {
+    color: var(--red-light);
+}
+
+.about-text p {
+    font-size: 14px;
+    line-height: 1.9;
+
+    color: var(--text-soft);
+
+    margin-bottom: 25px;
+}
+
+.signature {
+    margin-top: 45px;
+
+    font-family: var(--serif);
+    font-size: 31px;
+    font-style: italic;
+}
+
+
+/* =========================================================
+   SERVICES
+========================================================= */
+
+.services {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+
+    border-top: 1px solid var(--line);
+}
+
+.service {
+    padding: 55px 40px;
+
+    border-right: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+
+    min-height: 280px;
+
+    transition:
+        background .4s ease,
+        transform .4s ease;
+}
+
+.service:nth-child(2n) {
+    border-right: 0;
+}
+
+.service:hover {
+    background: var(--bg-card);
+}
+
+.service-number {
+    font-family: var(--mono);
+    font-size: 10px;
+    color: var(--red);
+
+    margin-bottom: 70px;
+}
+
+.service h3 {
+    font-family: var(--serif);
+    font-size: 37px;
+    font-weight: 400;
+
+    margin-bottom: 15px;
+}
+
+.service p {
+    max-width: 450px;
+
+    font-size: 13px;
+    line-height: 1.7;
+
+    color: var(--text-muted);
+}
+
+
+/* =========================================================
+   WORK FILTER
+========================================================= */
+
+.filter-bar {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+
+    margin-bottom: 45px;
+}
+
+.filter-btn {
+    border: 1px solid var(--line);
+    background: transparent;
+
+    color: var(--text-muted);
+
+    padding: 10px 16px;
+
+    font-family: var(--mono);
+    font-size: 9px;
+
+    letter-spacing: .1em;
+    text-transform: uppercase;
+
+    cursor: none;
+
+    transition: all .3s ease;
+}
+
+.filter-btn:hover,
+.filter-btn.active {
+    color: var(--bg);
+    background: var(--text);
+    border-color: var(--text);
+}
+
+
+/* =========================================================
+   GALLERY
+========================================================= */
+
+.gallery {
+    columns: 3 280px;
+    column-gap: 18px;
+}
+
+.work {
+    position: relative;
+
+    break-inside: avoid;
+
+    margin-bottom: 18px;
+
+    overflow: hidden;
+
+    background: var(--bg-card);
+
+    cursor: none;
+}
+
+.work img {
+    width: 100%;
+    height: auto;
+
+    display: block;
+
+    filter: grayscale(.15);
+
+    transition:
+        transform .8s var(--ease),
+        filter .6s ease;
+}
+
+.work:hover img {
+    transform: scale(1.045);
+    filter: grayscale(0);
+}
+
+.work-overlay {
+    position: absolute;
+    inset: 0;
+
+    padding: 22px;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+
+    background: linear-gradient(
+        transparent 40%,
+        rgba(0,0,0,.8)
+    );
+
+    opacity: 0;
+
+    transition: opacity .4s ease;
+}
+
+.work:hover .work-overlay {
+    opacity: 1;
+}
+
+.work-title {
+    font-family: var(--serif);
+    font-size: 25px;
+}
+
+.work-type {
+    margin-top: 5px;
+
+    font-family: var(--mono);
+    font-size: 8px;
+
+    color: #c4beb4;
+
+    text-transform: uppercase;
+    letter-spacing: .15em;
+}
+
+
+/* =========================================================
+   FEATURED
+========================================================= */
+
+.featured {
+    display: grid;
+    grid-template-columns: 1.3fr .7fr;
+
+    min-height: 700px;
+}
+
+.featured-image {
+    min-height: 600px;
+
+    background-image:
+        linear-gradient(
+            to bottom,
+            rgba(0,0,0,.05),
+            rgba(0,0,0,.35)
+        ),
+        url("https://images.unsplash.com/photo-1549490349-8643362247b5?auto=format&fit=crop&w=1800&q=90");
+
+    background-size: cover;
+    background-position: center;
+}
+
+.featured-info {
+    padding: 70px 55px;
+
+    background: var(--bg-card);
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.featured-small {
+    font-family: var(--mono);
+    font-size: 9px;
+
+    color: var(--red);
+
+    letter-spacing: .15em;
+    text-transform: uppercase;
+}
+
+.featured-info h3 {
+    font-family: var(--serif);
+    font-weight: 400;
+
+    font-size: clamp(45px, 5vw, 75px);
+
+    line-height: .9;
+
+    margin-top: 30px;
+}
+
+.featured-info p {
+    font-size: 13px;
+    line-height: 1.9;
+
+    color: var(--text-soft);
+
+    max-width: 450px;
+}
+
+.featured-list {
+    margin-top: 35px;
+
+    border-top: 1px solid var(--line);
+}
+
+.featured-list div {
+    padding: 15px 0;
+
+    border-bottom: 1px solid var(--line);
+
+    display: flex;
+    justify-content: space-between;
+
+    font-family: var(--mono);
+    font-size: 9px;
+
+    color: var(--text-muted);
+}
+
+.featured-list span:last-child {
+    color: var(--text);
+}
+
+
+/* =========================================================
+   COMMISSION
+========================================================= */
+
+.commission {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 9vw;
+}
+
+.commission-copy h3 {
+    font-family: var(--serif);
+    font-size: clamp(42px, 6vw, 80px);
+
+    font-weight: 400;
+    line-height: .95;
+
+    margin-bottom: 35px;
+}
+
+.commission-copy h3 em {
+    color: var(--red-light);
+}
+
+.commission-copy p {
+    max-width: 500px;
+
+    font-size: 14px;
+    line-height: 1.9;
+
+    color: var(--text-soft);
+}
+
+.commission-box {
+    border: 1px solid var(--line);
+
+    padding: 45px;
+}
+
+.commission-row {
+    padding: 22px 0;
+
+    border-bottom: 1px solid var(--line);
+
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+}
+
+.commission-row:first-child {
+    padding-top: 0;
+}
+
+.commission-row:last-child {
+    border-bottom: 0;
+}
+
+.commission-row span:first-child {
+    font-family: var(--mono);
+    font-size: 10px;
+
+    color: var(--text-muted);
+
+    text-transform: uppercase;
+}
+
+.commission-row span:last-child {
+    font-family: var(--serif);
+    font-size: 21px;
+
+    text-align: right;
+}
+
+
+/* =========================================================
+   TATTOO
+========================================================= */
+
+.tattoo-grid {
+    display: grid;
+    grid-template-columns: .8fr 1.2fr;
+    gap: 7vw;
+    align-items: center;
+}
+
+.tattoo-image {
+    aspect-ratio: 1 / 1;
+    overflow: hidden;
+
+    background: #151515;
+}
+
+.tattoo-image img {
+    width: 100%;
+    height: 100%;
+
+    object-fit: cover;
+
+    filter: grayscale(.3) contrast(1.08);
+
+    transition: transform 1s var(--ease);
+}
+
+.tattoo-image:hover img {
+    transform: scale(1.05);
+}
+
+.tattoo-copy h3 {
+    font-family: var(--serif);
+    font-weight: 400;
+
+    font-size: clamp(45px, 6vw, 85px);
+
+    line-height: .92;
+
+    margin-bottom: 35px;
+}
+
+.tattoo-copy p {
+    max-width: 520px;
+
+    font-size: 14px;
+    line-height: 1.9;
+
+    color: var(--text-soft);
+
+    margin-bottom: 35px;
+}
+
+.price-note {
+    border-left: 1px solid var(--red);
+
+    padding-left: 18px;
+
+    font-family: var(--mono);
+    font-size: 10px;
+
+    color: var(--text-muted);
+
+    line-height: 1.8;
+}
+
+
+/* =========================================================
+   PROCESS
+========================================================= */
+
+.process {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+
+    border-top: 1px solid var(--line);
+}
+
+.process-item {
+    padding: 35px 28px 50px;
+
+    border-right: 1px solid var(--line);
+}
+
+.process-item:last-child {
+    border-right: 0;
+}
+
+.process-number {
+    font-family: var(--mono);
+    font-size: 10px;
+    color: var(--red);
+
+    margin-bottom: 65px;
+}
+
+.process-item h4 {
+    font-family: var(--serif);
+    font-size: 30px;
+    font-weight: 400;
+
+    margin-bottom: 18px;
+}
+
+.process-item p {
+    font-size: 12px;
+    line-height: 1.8;
+
+    color: var(--text-muted);
+}
+
+
+/* =========================================================
+   CONTACT
+========================================================= */
+
+.contact {
+    min-height: 80vh;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.contact-title {
+    font-family: var(--serif);
+    font-weight: 400;
+
+    font-size: clamp(65px, 11vw, 160px);
+
+    line-height: .78;
+    letter-spacing: -.06em;
+
+    max-width: 1100px;
+}
+
+.contact-title em {
+    color: var(--red);
+}
+
+.contact-sub {
+    max-width: 520px;
+
+    margin-top: 55px;
+
+    color: var(--text-soft);
+
+    font-size: 14px;
+    line-height: 1.8;
+}
+
+.contact-email {
+    display: inline-block;
+
+    margin-top: 35px;
+
+    font-family: var(--mono);
+    font-size: 13px;
+
+    border-bottom: 1px solid var(--text);
+
+    padding-bottom: 6px;
+
+    transition:
+        color .3s ease,
+        border-color .3s ease;
+}
+
+.contact-email:hover {
+    color: var(--red-light);
+    border-color: var(--red-light);
+}
+
+
+/* =========================================================
+   SOCIALS
+========================================================= */
+
+.social-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+
+    margin-top: 90px;
+
+    border-top: 1px solid var(--line);
+}
+
+.social-link {
+    padding: 28px 0;
+
+    border-right: 1px solid var(--line);
+
+    display: flex;
+    justify-content: space-between;
+
+    padding-right: 25px;
+    margin-right: 25px;
+
+    font-family: var(--mono);
+    font-size: 10px;
+
+    color: var(--text-muted);
+
+    transition: color .3s ease;
+}
+
+.social-link:hover {
+    color: var(--text);
+}
+
+.social-link:last-child {
+    border-right: 0;
+}
+
+
+/* =========================================================
+   FOOTER
+========================================================= */
+
+footer {
+    padding: 40px 7vw;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    font-family: var(--mono);
+    font-size: 9px;
+
+    color: var(--text-muted);
+
+    letter-spacing: .1em;
+    text-transform: uppercase;
+}
+
+.footer-logo {
+    color: var(--text);
+}
+
+
+/* =========================================================
+   REVEAL
+========================================================= */
+
+.reveal {
+    opacity: 0;
+    transform: translateY(45px);
+
+    transition:
+        opacity 1s var(--ease),
+        transform 1s var(--ease);
+}
+
+.reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+
+/* =========================================================
+   IMAGE HOVER
+========================================================= */
+
+.image-frame {
+    overflow: hidden;
+}
+
+.image-frame img {
+    transition: transform 1s var(--ease);
+}
+
+.image-frame:hover img {
+    transform: scale(1.05);
+}
+
+
+/* =========================================================
+   BOOKING FORM
+========================================================= */
+
+.booking-form {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 22px;
+
+    margin-top: 60px;
+    max-width: 700px;
+}
+
+.booking-form .field {
+    display: flex;
+    flex-direction: column;
+    gap: 9px;
+}
+
+.booking-form .field.full {
+    grid-column: 1 / -1;
+}
+
+.booking-form label {
+    font-family: var(--mono);
+    font-size: 9px;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+}
+
+.booking-form input,
+.booking-form select,
+.booking-form textarea {
+    background: var(--bg-card);
+    border: 1px solid var(--line);
+    color: var(--text);
+
+    padding: 13px 15px;
+
+    font-family: var(--sans);
+    font-size: 13px;
+
+    transition:
+        border-color .3s ease,
+        background .3s ease;
+}
+
+.booking-form textarea {
+    min-height: 110px;
+    line-height: 1.6;
+    resize: vertical;
+}
+
+.booking-form input::placeholder,
+.booking-form textarea::placeholder {
+    color: var(--text-muted);
+}
+
+.booking-form input:focus,
+.booking-form select:focus,
+.booking-form textarea:focus {
+    outline: none;
+    border-color: var(--red);
+    background: var(--bg-soft);
+}
+
+.booking-note {
+    grid-column: 1 / -1;
+
+    font-family: var(--mono);
+    font-size: 10px;
+    line-height: 1.7;
+    color: var(--text-muted);
+}
+
+.booking-form button[type="submit"] {
+    grid-column: 1 / -1;
+    justify-self: start;
+
+    margin-top: 8px;
+    padding: 16px 34px;
+
+    background: var(--red);
+    color: var(--white);
+    border: 1px solid var(--red);
+
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+
+    cursor: none;
+
+    transition:
+        background .3s ease,
+        border-color .3s ease,
+        transform .3s ease;
+}
+
+.booking-form button[type="submit"]:hover {
+    background: var(--red-light);
+    border-color: var(--red-light);
+    transform: translateY(-2px);
+}
+
+
+/* =========================================================
+   MUSIC PLAYER
+========================================================= */
+
+.music-player {
+    position: fixed;
+    right: 28px;
+    bottom: 28px;
+    z-index: 400;
+
+    display: flex;
+    align-items: center;
+    gap: 14px;
+
+    padding: 12px 22px 12px 12px;
+    max-width: 280px;
+
+    background: rgba(16,16,19,.85);
+    backdrop-filter: blur(20px);
+    border: 1px solid var(--line);
+}
+
+.music-disc {
+    flex-shrink: 0;
+
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+
+    background: radial-gradient(circle at center, var(--bg-soft) 0%, #050506 70%);
+    border: 1px solid var(--line);
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    animation: discSpin 6s linear infinite;
+    animation-play-state: paused;
+}
+
+.music-disc.playing {
+    animation-play-state: running;
+}
+
+@keyframes discSpin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+.disc-center {
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+
+    background: var(--red);
+    color: var(--white);
+
+    font-family: var(--serif);
+    font-size: 9px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.music-info {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    min-width: 0;
+}
+
+.music-label {
+    font-family: var(--mono);
+    font-size: 8px;
+    letter-spacing: .16em;
+    text-transform: uppercase;
+    color: var(--red);
+}
+
+.music-info h3 {
+    font-family: var(--sans);
+    font-weight: 600;
+    font-size: 12px;
+    color: var(--text);
+
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.music-info p {
+    font-family: var(--mono);
+    font-size: 9px;
+    color: var(--text-muted);
+
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.music-button {
+    flex-shrink: 0;
+
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+
+    background: transparent;
+    color: var(--text);
+    border: 1px solid var(--line);
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    font-size: 11px;
+    cursor: none;
+
+    transition:
+        background .3s ease,
+        color .3s ease,
+        border-color .3s ease;
+}
+
+.music-button:hover {
+    background: var(--text);
+    color: var(--bg);
+    border-color: var(--text);
+}
+
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
+@media (max-width: 1100px) {
+
+    :root {
+        --sidebar-width: 220px;
+    }
+
+    .sidebar {
+        padding: 35px 25px;
+    }
+
+    .hero {
+        padding-left: 6vw;
+        padding-right: 6vw;
+    }
+
+    .section {
+        padding-left: 6vw;
+        padding-right: 6vw;
+    }
+
+    .featured {
+        grid-template-columns: 1fr;
+    }
+
+    .featured-image {
+        min-height: 500px;
+    }
+
+    .process {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .process-item:nth-child(2) {
+        border-right: 0;
+    }
+
+    .process-item:nth-child(-n+2) {
+        border-bottom: 1px solid var(--line);
+    }
+
+    .commission {
+        gap: 5vw;
+    }
+}
+
+
+@media (max-width: 800px) {
+
+    body {
+        cursor: auto;
+    }
+
+    .cursor,
+    .cursor-ring {
+        display: none;
+    }
+
+    .sidebar {
+        display: none;
+    }
+
+    .mobile-nav {
+        display: flex;
+    }
+
+    main {
+        margin-left: 0;
+    }
+
+    .hero {
+        min-height: 100svh;
+
+        padding:
+            120px
+            25px
+            65px;
+    }
+
+    .hero-background {
+        background-image:
+            linear-gradient(
+                rgba(9,9,11,.72),
+                rgba(9,9,11,.94)
+            ),
+            url("https://images.unsplash.com/photo-1513364776144-60967b0f800f?auto=format&fit=crop&w=1400&q=85");
+
+        background-position: center;
+    }
+
+    .hero h1 {
+        font-size: clamp(64px, 19vw, 120px);
+    }
+
+    .hero-description {
+        font-size: 13px;
+        margin-top: 35px;
+    }
+
+    .hero-meta {
+        gap: 25px;
+        flex-wrap: wrap;
+        margin-top: 35px;
+    }
+
+    .scroll-indicator {
+        display: none;
+    }
+
+    .section {
+        padding: 100px 25px;
+    }
+
+    .section-header {
+        grid-template-columns: 1fr;
+        gap: 25px;
+        margin-bottom: 55px;
+    }
+
+    .section-title {
+        font-size: 58px;
+    }
+
+    .about-grid {
+        grid-template-columns: 1fr;
+        gap: 55px;
+    }
+
+    .about-image {
+        max-width: 650px;
+    }
+
+    .services {
+        grid-template-columns: 1fr;
+    }
+
+    .service {
+        border-right: 0;
+        min-height: 250px;
+    }
+
+    .commission {
+        grid-template-columns: 1fr;
+    }
+
+    .tattoo-grid {
+        grid-template-columns: 1fr;
+        gap: 50px;
+    }
+
+    .tattoo-image {
+        max-width: 650px;
+    }
+
+    .process {
+        grid-template-columns: 1fr;
+    }
+
+    .process-item {
+        border-right: 0;
+        border-bottom: 1px solid var(--line);
+    }
+
+    .process-item:last-child {
+        border-bottom: 0;
+    }
+
+    .social-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .social-link {
+        margin-right: 0;
+        border-right: 0;
+        border-bottom: 1px solid var(--line);
+    }
+
+    footer {
+        padding: 30px 25px;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 12px;
+    }
+
+    .booking-form {
+        grid-template-columns: 1fr;
+    }
+
+    .music-player {
+        right: 14px;
+        bottom: 14px;
+        left: 14px;
+        max-width: none;
+    }
+}
+
+
+@media (max-width: 500px) {
+
+    .hero {
+        padding-left: 20px;
+        padding-right: 20px;
+    }
+
+    .hero h1 {
+        font-size: 68px;
+    }
+
+    .section {
+        padding: 85px 20px;
+    }
+
+    .section-title {
+        font-size: 50px;
+    }
+
+    .service {
+        padding: 38px 25px;
+    }
+
+    .service h3 {
+        font-size: 32px;
+    }
+
+    .commission-box {
+        padding: 28px;
+    }
+
+    .featured-info {
+        padding: 45px 28px;
+    }
+
+    .featured-image {
+        min-height: 380px;
+    }
+
+    .contact-title {
+        font-size: 70px;
+    }
+}
+
+
+/* =========================================================
+   SELECTION
+========================================================= */
+
+::selection {
+    background: var(--text);
+    color: var(--bg);
+}
+
+
+/* =========================================================
+   SCROLLBAR
+========================================================= */
+
+::-webkit-scrollbar {
+    width: 5px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--bg);
+}
+
+::-webkit-scrollbar-thumb {
+    background: #333338;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #55555a;
+}
+
+</style>
+</head>
+
+
+<body>
+
+
+<!-- =======================================================
+     LOADER
+======================================================= -->
+
+<div class="loader" id="loader">
+
+    <div class="loader-inner">
+
+        <div class="loader-top">
+            <span>WEYA.exe</span>
+            <span id="loaderPercent">00%</span>
+        </div>
+
+        <div class="loader-bar">
+            <div class="loader-progress" id="loaderProgress"></div>
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- =======================================================
+     NOISE
+======================================================= -->
+
+<div class="noise"></div>
+
+
+<!-- =======================================================
+     CURSOR
+======================================================= -->
+
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+
+
+<!-- =======================================================
+     DESKTOP SIDEBAR
+======================================================= -->
+
+<aside class="sidebar">
+
+    <div>
+
+        <a href="#home" class="logo">
+            WEYA<span>.exe</span>
+        </a>
+
+        <div class="logo-sub">
+            Independent Artist
+        </div>
+
+
+        <nav class="side-nav">
+
+            <a href="#home" class="active">
+                Home
+            </a>
+
+            <a href="#about">
+                About
+            </a>
+
+            <a href="#services">
+                Services
+            </a>
+
+            <a href="#works">
+                Works
+            </a>
+
+            <a href="#commission">
+                Commission
+            </a>
+
+            <a href="#tattoo">
+                Tattoo
+            </a>
+
+            <a href="#process">
+                Process
+            </a>
+
+            <a href="#contact">
+                Contact
+            </a>
+
+        </nav>
+
+    </div>
+
+
+    <div class="sidebar-bottom">
+
+        <div class="status">
+            <span class="status-dot"></span>
+            Available for commissions
+        </div>
+
+        <div>
+            Independent Artist · Thailand
+        </div>
+
+        <div>
+            © <span class="year"></span> WEYA.exe
+        </div>
+
+    </div>
+
+</aside>
+
+
+<!-- =======================================================
+     MOBILE NAV
+======================================================= -->
+
+<header class="mobile-nav">
+
+    <a href="#home" class="logo">
+        WEYA<span>.exe</span>
+    </a>
+
+    <div class="mobile-menu">
+        <span></span>
+        <span></span>
+    </div>
+
+</header>
+
+
+<!-- =======================================================
+     MAIN
+======================================================= -->
+
+<main>
+
+
+<!-- =======================================================
+     HERO
+======================================================= -->
+
+<section class="hero" id="home">
+
+    <div class="hero-background"></div>
+
+    <div class="hero-content reveal">
+
+        <div class="eyebrow">
+            Independent Artist · Thailand
+        </div>
+
+        <h1>
+            Art with
+            <em>a soul.</em>
+        </h1>
+
+        <p class="hero-description">
+            Visual artist working across illustration, tattoo art,
+            pattern design and experimental visual pieces.
+            Creating images that feel personal, tactile and alive.
+        </p>
+
+        <div class="hero-meta">
+
+            <div>
+                Based in
+                <strong>Thailand</strong>
+            </div>
+
+            <div>
+                Focus
+                <strong>Visual Art</strong>
+            </div>
+
+            <div>
+                Status
+                <strong>Open for work</strong>
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <div class="scroll-indicator">
+
+        Scroll
+
+        <span class="scroll-line"></span>
+
+    </div>
+
+</section>
+
+
+<!-- =======================================================
+     MARQUEE
+======================================================= -->
+
+<div class="marquee">
+
+    <div class="marquee-track">
+
+        <div class="marquee-item">
+            Illustration
+            <span>✦</span>
+        </div>
+
+        <div class="marquee-item">
+            Tattoo Art
+            <span>✦</span>
+        </div>
+
+        <div class="marquee-item">
+            Pattern Design
+            <span>✦</span>
+        </div>
+
+        <div class="marquee-item">
+            Visual Art
+            <span>✦</span>
+        </div>
+
+        <div class="marquee-item">
+            Custom Work
+            <span>✦</span>
+        </div>
+
+        <div class="marquee-item">
+            Illustration
+            <span>✦</span>
+        </div>
+
+        <div class="marquee-item">
+            Tattoo Art
+            <span>✦</span>
+        </div>
+
+        <div class="marquee-item">
+            Pattern Design
+            <span>✦</span>
+        </div>
+
+        <div class="marquee-item">
+            Visual Art
+            <span>✦</span>
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- =======================================================
+     ABOUT
+======================================================= -->
+
+<section class="section" id="about">
+
+    <div class="section-header reveal">
+
+        <div class="section-number">
+            01 / About
+        </div>
+
+        <h2 class="section-title">
+            Behind the
+            <em>work.</em>
+        </h2>
+
+    </div>
+
+
+    <div class="about-grid">
+
+        <div class="about-image reveal">
+
+            <img
+                src="https://images.unsplash.com/photo-1541961017774-22349e4a1262?auto=format&fit=crop&w=1200&q=90"
+                alt="Abstract artwork">
+
+            <div class="image-label">
+                Visual Research / 001
+            </div>
+
+        </div>
+
+
+        <div class="about-text reveal">
+
+            <div class="about-lead">
+                I make visual work that lives somewhere between
+                <em>design and feeling.</em>
+            </div>
+
+            <p>
+                WEYA.exe is an independent art practice based in
+                Thailand, focused on illustration, tattoo art,
+                pattern design and visual experimentation.
+            </p>
+
+            <p>
+                My work is driven by line, texture, composition
+                and the small imperfections that make an image
+                feel human.
+            </p>
+
+            <p>
+                Each project starts from an idea and develops
+                through sketching, visual research, composition
+                and careful refinement.
+            </p>
+
+            <div class="signature">
+                — WEYA
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =======================================================
+     SERVICES
+======================================================= -->
+
+<section class="section" id="services">
+
+    <div class="section-header reveal">
+
+        <div class="section-number">
+            02 / Services
+        </div>
+
+        <h2 class="section-title">
+            What I
+            <em>create.</em>
+        </h2>
+
+    </div>
+
+
+    <div class="services reveal">
+
+        <article class="service">
+
+            <div class="service-number">
+                01
+            </div>
+
+            <h3>
+                Illustration
+            </h3>
+
+            <p>
+                Custom digital illustrations, visual concepts,
+                editorial artwork, character artwork and
+                personal commissions.
+            </p>
+
+        </article>
+
+
+        <article class="service">
+
+            <div class="service-number">
+                02
+            </div>
+
+            <h3>
+                Pattern Design
+            </h3>
+
+            <p>
+                Original repeating patterns developed from
+                hand-drawn elements, textures and visual
+                references.
+            </p>
+
+        </article>
+
+
+        <article class="service">
+
+            <div class="service-number">
+                03
+            </div>
+
+            <h3>
+                Tattoo Art
+            </h3>
+
+            <p>
+                Custom tattoo concepts developed around
+                placement, line quality, scale and personal
+                visual identity.
+            </p>
+
+        </article>
+
+
+        <article class="service">
+
+            <div class="service-number">
+                04
+            </div>
+
+            <h3>
+                Visual Projects
+            </h3>
+
+            <p>
+                Art direction, visual development, graphic
+                artwork and experimental pieces for personal
+                and creative projects.
+            </p>
+
+        </article>
+
+    </div>
+
+</section>
+
+
+<!-- =======================================================
+     WORKS
+======================================================= -->
+
+<section class="section" id="works">
+
+    <div class="section-header reveal">
+
+        <div class="section-number">
+            03 / Selected Works
+        </div>
+
+        <h2 class="section-title">
+            A collection of
+            <em>things.</em>
+        </h2>
+
+    </div>
+
+
+    <div class="filter-bar reveal">
+
+        <button class="filter-btn active" data-filter="all">
+            All
+        </button>
+
+        <button class="filter-btn" data-filter="illustration">
+            Illustration
+        </button>
+
+        <button class="filter-btn" data-filter="pattern">
+            Pattern
+        </button>
+
+        <button class="filter-btn" data-filter="tattoo">
+            Tattoo
+        </button>
+
+        <button class="filter-btn" data-filter="visual">
+            Visual
+        </button>
+
+    </div>
+
+
+    <div class="gallery">
+
+
+        <!-- WORK 01 -->
+
+        <article class="work reveal"
+                 data-category="illustration">
+
+            <img
+                src="https://images.unsplash.com/photo-1547891654-e66ed7ebb968?auto=format&fit=crop&w=1000&q=90"
+                alt="Abstract illustration">
+
+            <div class="work-overlay">
+
+                <div class="work-title">
+                    Quiet Forms
+                </div>
+
+                <div class="work-type">
+                    Illustration
+                </div>
+
+            </div>
+
+        </article>
+
+
+        <!-- WORK 02 -->
+
+        <article class="work reveal"
+                 data-category="pattern">
+
+            <img
+                src="https://images.unsplash.com/photo-1550745165-9bc0b252726f?auto=format&fit=crop&w=1000&q=90"
+                alt="Graphic texture">
+
+            <div class="work-overlay">
+
+                <div class="work-title">
+                    Digital Texture
+                </div>
+
+                <div class="work-type">
+                    Pattern / Graphic
+                </div>
+
+            </div>
+
+        </article>
+
+
+        <!-- WORK 03 -->
+
+        <article class="work reveal"
+                 data-category="visual">
+
+            <img
+                src="https://images.unsplash.com/photo-1577083552431-6e5fd01988e5?auto=format&fit=crop&w=1000&q=90"
+                alt="Abstract art">
+
+            <div class="work-overlay">
+
+                <div class="work-title">
+                    Material Study
+                </div>
+
+                <div class="work-type">
+                    Visual Art
+                </div>
+
+            </div>
+
+        </article>
+
+
+        <!-- WORK 04 -->
+
+        <article class="work reveal"
+                 data-category="illustration">
+
+            <img
+                src="https://images.unsplash.com/photo-1549490349-8643362247b5?auto=format&fit=crop&w=1000&q=90"
+                alt="Abstract painting">
+
+            <div class="work-overlay">
+
+                <div class="work-title">
+                    Raw Colour
+                </div>
+
+                <div class="work-type">
+                    Illustration
+                </div>
+
+            </div>
+
+        </article>
+
+
+        <!-- WORK 05 -->
+
+        <article class="work reveal"
+                 data-category="pattern">
+
+            <img
+                src="https://images.unsplash.com/photo-1515405295579-ba7b45403062?auto=format&fit=crop&w=1000&q=90"
+                alt="Art materials">
+
+            <div class="work-overlay">
+
+                <div class="work-title">
+                    Surface Study
+                </div>
+
+                <div class="work-type">
+                    Pattern
+                </div>
+
+            </div>
+
+        </article>
+
+
+        <!-- WORK 06 -->
+
+        <article class="work reveal"
+                 data-category="visual">
+
+            <img
+                src="https://images.unsplash.com/photo-1579783902614-a3fb3927b6a5?auto=format&fit=crop&w=1000&q=90"
+                alt="Painting artwork">
+
+            <div class="work-overlay">
+
+                <div class="work-title">
+                    Red Memory
+                </div>
+
+                <div class="work-type">
+                    Visual
+                </div>
+
+            </div>
+
+        </article>
+
+
+        <!-- WORK 07 -->
+
+        <article class="work reveal"
+                 data-category="tattoo">
+
+            <img
+                src="https://images.unsplash.com/photo-1598373182133-52452f7691ef?auto=format&fit=crop&w=1000&q=90"
+                alt="Tattoo artwork">
+
+            <div class="work-overlay">
+
+                <div class="work-title">
+                    Black Line
+                </div>
+
+                <div class="work-type">
+                    Tattoo
+                </div>
+
+            </div>
+
+        </article>
+
+
+        <!-- WORK 08 -->
+
+        <article class="work reveal"
+                 data-category="illustration">
+
+            <img
+                src="https://images.unsplash.com/photo-1561214115-f2f134cc4912?auto=format&fit=crop&w=1000&q=90"
+                alt="Gallery artwork">
+
+            <div class="work-overlay">
+
+                <div class="work-title">
+                    Fragment
+                </div>
+
+                <div class="work-type">
+                    Illustration
+                </div>
+
+            </div>
+
+        </article>
+
+
+        <!-- WORK 09 -->
+
+        <article class="work reveal"
+                 data-category="visual">
+
+            <img
+                src="https://images.unsplash.com/photo-1541961017774-22349e4a1262?auto=format&fit=crop&w=1000&q=90"
+                alt="Abstract artwork">
+
+            <div class="work-overlay">
+
+                <div class="work-title">
+                    Afterimage
+                </div>
+
+                <div class="work-type">
+                    Visual Art
+                </div>
+
+            </div>
+
+        </article>
+
+
+    </div>
+
+</section>
+
+
+<!-- =======================================================
+     FEATURED PROJECT
+======================================================= -->
+
+<section class="section">
+
+    <div class="section-header reveal">
+
+        <div class="section-number">
+            04 / Featured
+        </div>
+
+        <h2 class="section-title">
+            Selected
+            <em>project.</em>
+        </h2>
+
+    </div>
+
+
+    <div class="featured reveal">
+
+        <div class="featured-image"></div>
+
+
+        <div class="featured-info">
+
+            <div>
+
+                <div class="featured-small">
+                    Project / 001
+                </div>
+
+                <h3>
+                    Material
+                    <br>
+                    & Memory
+                </h3>
+
+            </div>
+
+
+            <div>
+
+                <p>
+                    A visual study exploring texture, imperfect
+                    surfaces, colour relationships and the
+                    connection between physical materials and
+                    digital artwork.
+                </p>
+
+
+                <div class="featured-list">
+
+                    <div>
+                        <span>Year</span>
+                        <span>2026</span>
+                    </div>
+
+                    <div>
+                        <span>Medium</span>
+                        <span>Digital / Mixed</span>
+                    </div>
+
+                    <div>
+                        <span>Type</span>
+                        <span>Personal Project</span>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =======================================================
+     COMMISSION
+======================================================= -->
+
+<section class="section" id="commission">
+
+    <div class="section-header reveal">
+
+        <div class="section-number">
+            05 / Commission
+        </div>
+
+        <h2 class="section-title">
+            Let's make
+            <em>something.</em>
+        </h2>
+
+    </div>
+
+
+    <div class="commission">
+
+        <div class="commission-copy reveal">
+
+            <h3>
+                Have an idea?
+                <em>Let's build it.</em>
+            </h3>
+
+            <p>
+                Custom artwork is developed around your idea,
+                references and intended use. Send a brief,
+                sketches, references or simply explain what
+                you have in mind.
+            </p>
+
+        </div>
+
+
+        <div class="commission-box reveal">
+
+
+            <div class="commission-row">
+
+                <span>
+                    Illustration
+                </span>
+
+                <span>
+                    From ฿1,000+
+                </span>
+
+            </div>
+
+
+            <div class="commission-row">
+
+                <span>
+                    Pattern Design
+                </span>
+
+                <span>
+                    Discuss
+                </span>
+
+            </div>
+
+
+            <div class="commission-row">
+
+                <span>
+                    Tattoo Design
+                </span>
+
+                <span>
+                    From ฿1,000+
+                </span>
+
+            </div>
+
+
+            <div class="commission-row">
+
+                <span>
+                    Custom Project
+                </span>
+
+                <span>
+                    By brief
+                </span>
+
+            </div>
+
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =======================================================
+     TATTOO
+======================================================= -->
+
+<section class="section" id="tattoo">
+
+    <div class="section-header reveal">
+
+        <div class="section-number">
+            06 / Tattoo
+        </div>
+
+        <h2 class="section-title">
+            Drawn to
+            <em>skin.</em>
+        </h2>
+
+    </div>
+
+
+    <div class="tattoo-grid">
+
+        <div class="tattoo-image reveal">
+
+            <img
+                src="https://images.unsplash.com/photo-1598373182133-52452f7691ef?auto=format&fit=crop&w=1300&q=90"
+                alt="Tattoo artwork">
+
+        </div>
+
+
+        <div class="tattoo-copy reveal">
+
+            <h3>
+                Lines that
+                <br>
+                stay.
+            </h3>
+
+            <p>
+                Tattoo work focuses on custom artwork,
+                composition and line-based visual language.
+                Every design is adjusted to fit the placement,
+                scale and character of the piece.
+            </p>
+
+
+            <div class="price-note">
+
+                Custom tattoo work starts from ฿1,000.
+                Final pricing depends on size, placement,
+                detail and overall design.
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =======================================================
+     PROCESS
+======================================================= -->
+
+<section class="section" id="process">
+
+    <div class="section-header reveal">
+
+        <div class="section-number">
+            07 / Process
+        </div>
+
+        <h2 class="section-title">
+            From idea
+            <em>to image.</em>
+        </h2>
+
+    </div>
+
+
+    <div class="process reveal">
+
+
+        <div class="process-item">
+
+            <div class="process-number">
+                01
+            </div>
+
+            <h4>
+                Brief
+            </h4>
+
+            <p>
+                We begin with your idea, references,
+                requirements and intended direction.
+            </p>
+
+        </div>
+
+
+        <div class="process-item">
+
+            <div class="process-number">
+                02
+            </div>
+
+            <h4>
+                Sketch
+            </h4>
+
+            <p>
+                Concepts are developed through sketches,
+                composition and visual exploration.
+            </p>
+
+        </div>
+
+
+        <div class="process-item">
+
+            <div class="process-number">
+                03
+            </div>
+
+            <h4>
+                Develop
+            </h4>
+
+            <p>
+                The selected direction is refined through
+                line, texture, colour and detail.
+            </p>
+
+        </div>
+
+
+        <div class="process-item">
+
+            <div class="process-number">
+                04
+            </div>
+
+            <h4>
+                Deliver
+            </h4>
+
+            <p>
+                Final artwork is prepared in the agreed
+                format and delivered ready for use.
+            </p>
+
+        </div>
+
+
+    </div>
+
+</section>
+
+
+<!-- =======================================================
+     CONTACT
+======================================================= -->
+
+<section class="section contact" id="contact">
+
+    <div class="section-number reveal">
+        08 / Contact
+    </div>
+
+
+    <h2 class="contact-title reveal">
+
+        Have a project?
+        <br>
+
+        <em>Let's talk.</em>
+
+    </h2>
+
+
+    <p class="contact-sub reveal">
+
+        For commissions, collaborations, artwork,
+        design projects or creative inquiries,
+        feel free to get in touch.
+
+    </p>
+
+
+    <a
+        href="mailto:ponyomest@gmail.com"
+        class="contact-email reveal">
+
+        ponyomest@gmail.com
+
+    </a>
+
+    <form class="booking-form reveal" id="bookingForm">
+        <div class="field">
+            <label for="bookingName">Your name</label>
+            <input id="bookingName" name="name" type="text" placeholder="Name / nickname" required>
+        </div>
+        <div class="field">
+            <label for="bookingEmail">Your email</label>
+            <input id="bookingEmail" name="email" type="email" placeholder="you@example.com" required>
+        </div>
+        <div class="field">
+            <label for="bookingType">Booking for</label>
+            <select id="bookingType" name="type" required>
+                <option value="">Choose a service</option>
+                <option>Illustration / Commission</option>
+                <option>Tattoo appointment</option>
+                <option>Pattern design</option>
+                <option>Custom art project</option>
+                <option>Other inquiry</option>
+            </select>
+        </div>
+        <div class="field">
+            <label for="bookingDate">Preferred date</label>
+            <input id="bookingDate" name="date" type="date">
+        </div>
+        <div class="field full">
+            <label for="bookingDetails">Project details / idea / placement</label>
+            <textarea id="bookingDetails" name="details" placeholder="Tell me about your idea, size, references, placement or preferred time..." required></textarea>
+        </div>
+        <p class="booking-note">Submitting opens your email app with your booking details prepared. Your appointment is confirmed only after WEYA.exe replies.</p>
+        <button type="submit">Send booking request ↗</button>
+    </form>
+
+    <div class="social-grid reveal">
+
+
+        <a
+            href="https://www.instagram.com/cheeseburger.withoutcheese?stkn=MWhiZnlvcHIzejNqZQ%3D%3D&utm_source=qr"
+            target="_blank"
+            class="social-link">
+
+            <span>Instagram</span>
+            <span>@Cheeseburger.withoutcheese ↗</span>
+
+        </a>
+
+
+        <a
+            href="https://www.facebook.com/bigbear.orz?"
+            target="_blank"
+            class="social-link">
+
+            <span>Facebook</span>
+            <span>Weeraya inthanong ↗</span>
+
+        </a>
+
+
+        <a
+            href="https://www.tiktok.com/"
+            target="_blank"
+            class="social-link">
+
+            <span>TikTok</span>
+            <span>@weya.exe ↗</span>
+
+        </a>
+
+
+    </div>
+
+</section>
+
+
+<!-- =======================================================
+     FOOTER
+======================================================= -->
+
+<footer>
+
+    <div class="footer-logo">
+        WEYA.exe
+    </div>
+
+    <div>
+        Independent Artist · Thailand
+    </div>
+
+    <div>
+        © <span class="year"></span>
+    </div>
+
+</footer>
+
+
+</main>
+
+
+<!-- =======================================================
+     JAVASCRIPT
+======================================================= -->
+
+<script>
+
+/* =========================================================
+   LOADER
+========================================================= */
+
+let progress = 0;
+
+const loader = document.getElementById("loader");
+const progressBar = document.getElementById("loaderProgress");
+const progressText = document.getElementById("loaderPercent");
+
+const loadingInterval = setInterval(() => {
+
+    progress += Math.floor(Math.random() * 7) + 2;
+
+    if (progress >= 100) {
+
+        progress = 100;
+
+        clearInterval(loadingInterval);
+
+        setTimeout(() => {
+            loader.classList.add("hide");
+        }, 500);
+
+    }
+
+    progressBar.style.width = progress + "%";
+    progressText.textContent =
+        String(progress).padStart(2, "0") + "%";
+
+}, 80);
+
+
+/* =========================================================
+   YEAR
+========================================================= */
+
+document.querySelectorAll(".year").forEach(el => {
+
+    el.textContent = new Date().getFullYear();
+
+});
+
+
+/* =========================================================
+   CUSTOM CURSOR
+========================================================= */
+
+const cursor = document.getElementById("cursor");
+const cursorRing = document.getElementById("cursorRing");
+
+let mouseX = 0;
+let mouseY = 0;
+
+let ringX = 0;
+let ringY = 0;
+
+document.addEventListener("mousemove", e => {
+
+    mouseX = e.clientX;
+    mouseY = e.clientY;
+
+    cursor.style.left = mouseX + "px";
+    cursor.style.top = mouseY + "px";
+
+});
+
+
+function animateCursor() {
+
+    ringX += (mouseX - ringX) * .12;
+    ringY += (mouseY - ringY) * .12;
+
+    cursorRing.style.left = ringX + "px";
+    cursorRing.style.top = ringY + "px";
+
+    requestAnimationFrame(animateCursor);
+
+}
+
+animateCursor();
+
+
+/* =========================================================
+   CURSOR HOVER
+========================================================= */
+
+const hoverElements =
+    document.querySelectorAll(
+        "a, button, .work, .service, .social-link"
+    );
+
+hoverElements.forEach(element => {
+
+    element.addEventListener("mouseenter", () => {
+
+        cursor.classList.add("active");
+        cursorRing.classList.add("active");
+
+    });
+
+    element.addEventListener("mouseleave", () => {
+
+        cursor.classList.remove("active");
+        cursorRing.classList.remove("active");
+
+    });
+
+});
+
+
+/* =========================================================
+   SCROLL REVEAL
+========================================================= */
+
+const revealElements =
+    document.querySelectorAll(".reveal");
+
+const revealObserver =
+    new IntersectionObserver(
+
+        entries => {
+
+            entries.forEach(entry => {
+
+                if (entry.isIntersecting) {
+
+                    entry.target.classList.add("visible");
+
+                    revealObserver.unobserve(
+                        entry.target
+                    );
+
+                }
+
+            });
+
+        },
+
+        {
+            threshold: .08
+        }
+
+    );
+
+
+revealElements.forEach(element => {
+
+    revealObserver.observe(element);
+
+});
+
+
+/* =========================================================
+   WORK FILTER
+========================================================= */
+
+const filterButtons =
+    document.querySelectorAll(".filter-btn");
+
+const works =
+    document.querySelectorAll(".work");
+
+
+filterButtons.forEach(button => {
+
+    button.addEventListener("click", () => {
+
+        const filter =
+            button.dataset.filter;
+
+
+        filterButtons.forEach(btn => {
+
+            btn.classList.remove("active");
+
+        });
+
+
+        button.classList.add("active");
+
+
+        works.forEach(work => {
+
+            const category =
+                work.dataset.category;
+
+
+            if (
+                filter === "all" ||
+                category === filter
+            ) {
+
+                work.style.display = "block";
+
+                setTimeout(() => {
+                    work.style.opacity = "1";
+                    work.style.transform =
+                        "translateY(0)";
+                }, 20);
+
+            } else {
+
+                work.style.opacity = "0";
+                work.style.transform =
+                    "translateY(20px)";
+
+                setTimeout(() => {
+                    work.style.display = "none";
+                }, 300);
+
+            }
+
+        });
+
+    });
+
+});
+
+
+/* =========================================================
+   ACTIVE NAV
+========================================================= */
+
+const sections =
+    document.querySelectorAll("main section[id]");
+
+const navLinks =
+    document.querySelectorAll(".side-nav a");
+
+
+window.addEventListener("scroll", () => {
+
+    let current = "";
+
+    sections.forEach(section => {
+
+        const sectionTop =
+            section.offsetTop - 250;
+
+        if (
+            window.scrollY >= sectionTop
+        ) {
+
+            current = section.id;
+
+        }
+
+    });
+
+
+    navLinks.forEach(link => {
+
+        link.classList.remove("active");
+
+        if (
+            link.getAttribute("href") ===
+            "#" + current
+        ) {
+
+            link.classList.add("active");
+
+        }
+
+    });
+
+});
+
+
+/* =========================================================
+   SMOOTH ANCHOR
+========================================================= */
+
+document.querySelectorAll(
+    'a[href^="#"]'
+).forEach(anchor => {
+
+    anchor.addEventListener("click", function(e) {
+
+        const target =
+            document.querySelector(
+                this.getAttribute("href")
+            );
+
+        if (!target) return;
+
+        e.preventDefault();
+
+        target.scrollIntoView({
+            behavior: "smooth",
+            block: "start"
+        });
+
+    });
+
+});
+
+
+/* =========================================================
+   IMAGE PARALLAX
+========================================================= */
+
+window.addEventListener(
+    "scroll",
+    () => {
+
+        const hero =
+            document.querySelector(
+                ".hero-background"
+            );
+
+        if (!hero) return;
+
+        const scroll =
+            window.scrollY;
+
+        if (scroll < window.innerHeight) {
+
+            hero.style.transform =
+                `translateY(${scroll * .12}px) scale(1.02)`;
+
+        }
+
+    }
+);
+
+
+/* =========================================================
+   IMAGE LAZY LOADING
+========================================================= */
+
+document.querySelectorAll("img").forEach(img => {
+
+    img.loading = "lazy";
+
+});
+
+
+/* =========================================================
+   PREVENT IMAGE DRAG
+========================================================= */
+
+document.querySelectorAll("img").forEach(img => {
+
+    img.addEventListener("dragstart", e => {
+
+        e.preventDefault();
+
+    });
+
+});
+
+
+/* =========================================================
+   KEYBOARD SHORTCUT
+========================================================= */
+
+document.addEventListener("keydown", e => {
+
+    if (e.key === "Escape") {
+
+        window.scrollTo({
+            top: 0,
+            behavior: "smooth"
+        });
+
+    }
+
+});
+
+
+/* =========================================================
+   MOBILE MENU VISUAL INTERACTION
+========================================================= */
+
+const mobileMenu =
+    document.querySelector(".mobile-menu");
+
+mobileMenu.addEventListener("click", () => {
+
+    window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+    });
+
+});
+
+
+/* =========================================================
+   DOCUMENT READY
+========================================================= */
+
+window.addEventListener("load", () => {
+
+    document.body.classList.add("loaded");
+
+});
+
+
+</script>
+
+<!-- WEYA.exe MUSIC PLAYER -->
+
+<div class="music-player">
+
+    <div class="music-disc" id="musicDisc">
+        <div class="disc-center">W</div>
+    </div>
+
+    <div class="music-info">
+        <span class="music-label">NOW PLAYING</span>
+        <h3>READY TO DIE</h3>
+        <p>SOFT KILL · WEYA.exe</p>
+    </div>
+
+    <button class="music-button" id="musicButton"
+            onclick="toggleMusic()">
+
+        <span id="musicIcon">▶</span>
+
+    </button>
+
+    <audio id="bgMusic" loop>
+        <source src="assets/music/song.mp3" type="audio/mpeg">
+    </audio>
+
+</div>
+
+<script>
+const bgMusic = document.getElementById("bgMusic");
+const musicDisc = document.getElementById("musicDisc");
+const musicIcon = document.getElementById("musicIcon");
+const musicButton = document.getElementById("musicButton");
+
+async function toggleMusic() {
+    if (bgMusic.paused) {
+        try {
+            await bgMusic.play();
+
+            musicDisc.classList.add("playing");
+            musicIcon.innerHTML = "Ⅱ";
+            musicButton.title = "Pause music";
+
+        } catch (error) {
+            console.log("Unable to play audio:", error);
+        }
+
+    } else {
+        bgMusic.pause();
+
+        musicDisc.classList.remove("playing");
+        musicIcon.innerHTML = "▶";
+        musicButton.title = "Play music";
+    }
+}
+</script>
+
+
+
+<script>
+document.getElementById("bookingForm")?.addEventListener("submit", function (event) {
+    event.preventDefault();
+    const form = event.currentTarget;
+    const name = document.getElementById("bookingName").value.trim();
+    const email = document.getElementById("bookingEmail").value.trim();
+    const type = document.getElementById("bookingType").value;
+    const date = document.getElementById("bookingDate").value || "Flexible / to be discussed";
+    const details = document.getElementById("bookingDetails").value.trim();
+
+    const subject = encodeURIComponent("Booking Request — " + type + " — " + name);
+    const body = encodeURIComponent(
+        "Hello WEYA.exe,\n\nI would like to make a booking.\n\n" +
+        "Name: " + name + "\nEmail: " + email + "\nService: " + type +
+        "\nPreferred date: " + date + "\n\nDetails:\n" + details +
+        "\n\nThank you!"
+    );
+    window.location.href = "mailto:ponyomest@gmail.com?subject=" + subject + "&body=" + body;
+});
+</script>
+
+</body>
+</html>

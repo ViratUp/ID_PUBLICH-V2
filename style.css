@@ -1,0 +1,208 @@
+
+/* ===== WEYA.exe MUSIC PLAYER ===== */
+
+.music-player {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    z-index: 9999;
+
+    display: flex;
+    align-items: center;
+    gap: 15px;
+
+    padding: 14px 20px 14px 14px;
+
+    background: rgba(12, 10, 12, 0.92);
+    border: 1px solid rgba(166, 48, 58, 0.5);
+    border-radius: 4px;
+
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+
+    box-shadow:
+        0 0 25px rgba(150, 20, 40, 0.12),
+        inset 0 0 20px rgba(150, 20, 40, 0.04);
+
+    color: #f4eeee;
+    font-family: 'DM Sans', sans-serif;
+
+    transition: all 0.35s ease;
+}
+
+.music-player:hover {
+    border-color: #a83b46;
+
+    box-shadow:
+        0 0 35px rgba(180, 35, 55, 0.2);
+}
+
+/* VINYL DISC */
+
+.music-disc {
+    width: 48px;
+    height: 48px;
+    flex-shrink: 0;
+
+    border-radius: 50%;
+
+    background:
+        repeating-radial-gradient(
+            circle,
+            #191719 0px,
+            #191719 2px,
+            #30282d 3px,
+            #111 4px
+        );
+
+    border: 1px solid #5e3038;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    box-shadow: 0 0 12px rgba(180, 40, 60, 0.15);
+}
+
+.disc-center {
+    width: 19px;
+    height: 19px;
+
+    border-radius: 50%;
+
+    background: #9e303b;
+    color: #fff;
+
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border: 2px solid #171214;
+}
+
+/* DISC ROTATION */
+
+.music-disc.playing {
+    animation: vinylSpin 4s linear infinite;
+}
+
+@keyframes vinylSpin {
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* SONG INFORMATION */
+
+.music-info {
+    min-width: 130px;
+}
+
+.music-label {
+    display: block;
+
+    font-family: 'DM Mono', monospace;
+    font-size: 8px;
+
+    letter-spacing: 2px;
+    color: #a84954;
+
+    margin-bottom: 5px;
+}
+
+.music-info h3 {
+    margin: 0;
+
+    font-size: 12px;
+    font-weight: 600;
+
+    letter-spacing: 1.5px;
+    color: #f5eeee;
+}
+
+.music-info p {
+    margin: 5px 0 0;
+
+    font-size: 9px;
+    letter-spacing: 1px;
+
+    color: #82767a;
+}
+
+/* PLAY BUTTON */
+
+.music-button {
+    width: 38px;
+    height: 38px;
+
+    flex-shrink: 0;
+
+    border: 1px solid #963944;
+    border-radius: 50%;
+
+    background: #8f2936;
+    color: white;
+
+    font-size: 13px;
+    cursor: pointer;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    transition: all 0.3s ease;
+}
+
+.music-button:hover {
+    background: #c04452;
+    border-color: #e16b76;
+
+    box-shadow: 0 0 20px rgba(200, 50, 70, 0.35);
+
+    transform: scale(1.08);
+}
+
+.music-button:active {
+    transform: scale(0.93);
+}
+
+/* MOBILE */
+
+@media (max-width: 600px) {
+    .music-player {
+        bottom: 18px;
+        right: 15px;
+
+        gap: 10px;
+        padding: 10px 13px 10px 10px;
+    }
+
+    .music-disc {
+        width: 40px;
+        height: 40px;
+    }
+
+    .music-info {
+        min-width: 105px;
+    }
+
+    .music-info h3 {
+        font-size: 10px;
+    }
+
+    .music-info p {
+        font-size: 8px;
+    }
+
+    .music-button {
+        width: 34px;
+        height: 34px;
+    }
+}
